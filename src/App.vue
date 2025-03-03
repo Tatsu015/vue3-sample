@@ -17,6 +17,8 @@ const reset = () => {
   <button @click="increment">CLICK ME!!!</button>
   <div>{{ count }}</div>
   <button @click="reset">reset</button>
+
+  <input v-model="message" />
 </template>
 
 <style>
