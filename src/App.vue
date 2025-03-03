@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const message = ref('hello world')
+</script>
 <template>
-  <h1>hello world!</h1>
+  <h1>{{ message }}</h1>
 </template>
