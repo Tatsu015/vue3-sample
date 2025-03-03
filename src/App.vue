@@ -28,6 +28,7 @@ const toggle = () => {
   <button @click="toggle">toggle</button>
   <div v-if="visible">Visible!!</div>
   <div v-else>Unvisible...</div>
+  <div>{{ visible ? 'Visible' : 'Unvisible' }}</div>
 </template>
 
 <style>
