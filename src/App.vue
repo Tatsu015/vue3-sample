@@ -29,6 +29,9 @@ const toggle = () => {
   <div v-if="visible">Visible!!</div>
   <div v-else>Unvisible...</div>
   <div>{{ visible ? 'Visible' : 'Unvisible' }}</div>
+
+  <!-- this format not OK because *.vue not tsx -->
+  <!-- <div>{{ visible? <div>Visible</div>:<div>Unvisible</div> }}</div> -->
 </template>
 
 <style>
