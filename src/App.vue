@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Child from './components/ChildComponent.vue'
+import ChildComponent from './components/ChildComponent.vue'
 </script>
 <template>
-  <Child />
+  <ChildComponent msg="test message" />
 </template>
