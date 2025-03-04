@@ -2,6 +2,10 @@
 defineProps({
   msg: String,
 })
+
+const emit = defineEmits(['response'])
+
+emit('response', 'test emit!!!!!!!!!')
 </script>
 
 <template>
