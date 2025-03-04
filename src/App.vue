@@ -1,13 +1,21 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
+
+let count = 0
 
 type Todo = {
   id: number
   text: string
+  done: boolean
 }
 
 const todo: Ref<string> = ref('')
-const todos: Ref<Todo[]> = ref([{ id: Date.now(), text: 'lean html' }])
+const todos: Ref<Todo[]> = ref([
+  { id: count++, text: 'lean html', done: false },
+  { id: count++, text: 'lean js', done: false },
+  { id: count++, text: 'lean css', done: false },
+])
+const hideCompleted = ref(false)
 
 const handleDelete = (todo: Todo) => {
   console.log('delete', todo)
@@ -16,20 +24,38 @@ const handleDelete = (todo: Todo) => {
 
 const handleAdd = () => {
   console.log('add', todo.value)
-  todos.value.push({ id: Date.now(), text: todo.value })
+  todos.value.push({ id: count++, text: todo.value, done: false })
 }
+
+const handleHideCompleted = () => {
+  hideCompleted.value = !hideCompleted.value
+}
+
+const filteredTodos = computed(() => {
+  return hideCompleted.value ? todos.value.filter((t) => t.done !== true) : todos.value
+})
 </script>
 
 <template>
   <input type="text" placeholder="new todo" v-model="todo" />
   <button @click="handleAdd">Add Text</button>
-
+  <div></div>
+  <button @click="handleHideCompleted">
+    {{ hideCompleted ? 'Show completed' : 'Hide completed' }}
+  </button>
   <ul>
-    <li v-for="item in todos" :key="item.id">
-      {{ item.id }}{{ item.text }}
+    <li v-for="item in filteredTodos" :key="item.id">
+      <input type="checkbox" v-model="item.done" />
+      <span :class="{ done: item.done }">
+        {{ item.text }}
+      </span>
       <button @click="handleDelete(item)">X</button>
     </li>
   </ul>
 </template>
 
-<style></style>
+<style>
+.done {
+  text-decoration: line-through;
+}
+</style>
