@@ -1,42 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
-const count = ref(0)
-const message = ref('count!!!')
-const messageCssClass = ref('msg')
-const visible = ref(false)
+type Todo = {
+  id: number
+  text: string
+}
 
-const increment = () => {
-  count.value++
+const todo: Ref<string> = ref('')
+const todos: Ref<Todo[]> = ref([{ id: Date.now(), text: 'lean html' }])
+
+const handleDelete = (todo: Todo) => {
+  console.log('delete', todo)
+  todos.value = todos.value.filter((t) => t.id !== todo.id)
 }
-const reset = () => {
-  count.value = 0
-}
-const toggle = () => {
-  visible.value = !visible.value
+
+const handleAdd = () => {
+  console.log('add', todo.value)
+  todos.value.push({ id: Date.now(), text: todo.value })
 }
 </script>
 
 <template>
-  <h1 :class="messageCssClass">{{ message }}</h1>
-  <button @click="increment">CLICK ME!!!</button>
-  <div>{{ count }}</div>
-  <button @click="reset">reset</button>
+  <input type="text" placeholder="new todo" v-model="todo" />
+  <button @click="handleAdd">Add Text</button>
 
-  <input v-model="message" />
-
-  <button @click="toggle">toggle</button>
-  <div v-if="visible">Visible!!</div>
-  <div v-else>Unvisible...</div>
-  <div>{{ visible ? 'Visible' : 'Unvisible' }}</div>
-
-  <!-- this format not OK because *.vue not tsx -->
-  <!-- <div>{{ visible? <div>Visible</div>:<div>Unvisible</div> }}</div> -->
+  <ul>
+    <li v-for="item in todos" :key="item.id">
+      {{ item.id }}{{ item.text }}
+      <button @click="handleDelete(item)">X</button>
+    </li>
+  </ul>
 </template>
 
-<style>
-.msg {
-  color: red;
-  font-size: xx-large;
-}
-</style>
+<style></style>
